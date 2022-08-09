@@ -1,49 +1,62 @@
-import {Text, View} from "./Themed";
+import {View} from "./Themed";
 import RangeColors from "../utils/RangeColors";
 import React from "react";
-import {getRangeColor} from "../utils/LightFormula";
+import {getColor} from "../utils/LightFormula";
+import {StyleSheet} from "react-native";
 
 interface Props {
     value: number
-}
-
-const getColor = (value: number): string => {
-    const color = getRangeColor(value);
-    return color ? color.hex : '#000000';
 }
 
 const ColorSpectrum: React.FC<Props> = ({value}) => {
     const color = getColor(value)
 
     return (
-        <View
-            style={{
-                flex: 1,
-                alignItems: "flex-start",
-            }}
-        >
+        <View style={styles.colorPalette}>
             {
                 Object.values(RangeColors).map((rangeColor, rangeColorIndex) => (
                     <View
                         key={rangeColorIndex}
-                        style={{
-                            alignItems: "flex-start",
-                            justifyContent: "center",
-                            backgroundColor: rangeColor.hex,
-                            height: 30,
-                        }}
+                        style={[{
+                            backgroundColor: rangeColor.hex
+                        }, styles.colorPaletteItem]}
                     >
-                        <Text style={{
-                            color: color === rangeColor.hex ? '#000000' : rangeColor.hex,
-                            fontWeight: "bold"
-                        }}>
-                            {value.toFixed(0)}
-                        </Text>
+                        {
+                            color === rangeColor.hex && !!value &&
+                            <View style={styles.colorPalettePointer} />
+                        }
                     </View>
                 ))
             }
         </View>
     )
 }
+
+const styles = StyleSheet.create({
+    colorPalette: {
+        alignItems: 'flex-start',
+        flexDirection: 'column',
+        width: '40px'
+    },
+    colorPaletteItem: {
+        flex: 1,
+        position: 'relative',
+        width: '20px'
+    },
+    colorPalettePointer: {
+        borderBottomColor: 'transparent',
+        borderBottomWidth: 10,
+        borderTopColor: 'transparent',
+        borderTopWidth: 10,
+        borderRightColor: 'white',
+        borderRightWidth: 10,
+        borderStyle: 'solid',
+        height: 0,
+        position: 'absolute',
+        right: '-15px',
+        top: 'calc(50% - 10px)',
+        width: 0,
+    }
+})
 
 export default ColorSpectrum

@@ -40,6 +40,11 @@ export function getRangeColor(value: number): RangeColor | null  {
     return colors.length ? colors[0] : null;
 }
 
+export function getColor(value: number): string {
+    const color = getRangeColor(value);
+    return color ? color.hex : '#000000';
+}
+
 function isInside(c: RangeColor, value: number): boolean {
     return c.lower - 1 < value && value <= c.upper
 }

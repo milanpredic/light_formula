@@ -1,12 +1,12 @@
 import {StyleSheet} from 'react-native';
-
 import {Text, View} from '../components/Themed';
 import {RootTabScreenProps} from '../types';
 import SearchBar from "../components/SearchBar";
 import {useEffect, useState} from "react";
-import LightFormula, {LightFormulaResult} from "../utils/LightFormula";
+import LightFormula, {getColor, LightFormulaResult} from "../utils/LightFormula";
 import ColorSpectrum from "../components/ColorSpectrum";
 import List from "../components/List";
+import ContentBox from "../components/ContentBox";
 
 export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
     const [phrase, setPhrase] = useState('');
@@ -32,13 +32,30 @@ export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
     }, [result.total])
 
     return (
-        <View style={styles.container}>
-            <Text style={styles.title}>Light Formula: {average}</Text>
-            <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)"/>
-            <ColorSpectrum value={average} />
-            {
-                result.length && <List value={average} />
-            }
+        <View style={styles.main}>
+            <View style={styles.header}>
+                <Text style={styles.headerLabel}>Light Formula</Text>
+                <Text
+                    style={[styles.headerNumber, {color: average ? getColor(average) : 'white'} ]}
+                >
+                    {average}
+                </Text>
+            </View>
+            <View style={styles.content}>
+                <ColorSpectrum value={average} />
+
+
+                {/*<View> list</View>*/}
+                <View style={styles.contentInner}>
+                    <ContentBox title="List 1" key="1">
+                        { !!result.length && <List value={average} />}
+                    </ContentBox>
+                    <ContentBox title="List 2" key="2">
+                        { !!result.length && <List value={average} />}
+                    </ContentBox>
+                </View>
+            </View>
+
             <SearchBar
                 clicked={clicked}
                 setClicked={(c) => setClicked(c)}
@@ -50,20 +67,37 @@ export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        alignItems: 'flex-start',
-        justifyContent: 'flex-start',
+    main: {
+        flexDirection: 'column',
+        flexWrap: 'nowrap',
+        minHeight: '300px',
+        height: '100vh',
     },
-    title: {
+    header: {
+        display: 'flex',
+        flexDirection: 'row',
+        flexWrap: 'nowrap',
+        justifyContent: 'space-between',
+        padding: '20px'
+    },
+    headerLabel: {
         fontSize: 20,
-        marginTop: 20,
-        marginLeft: 20,
-        marginBottom: 20,
         fontWeight: 'bold',
     },
-    separator: {
-        height: 1,
-        width: '100%',
+    headerNumber: {
+        fontSize: 20,
+        fontWeight: 'bold',
+    },
+    content: {
+        flex: 1,
+        flexDirection: 'row',
+        flexWrap: 'nowrap'
+    },
+    contentInner: {
+        flex: 1,
+        height: '100%',
+        overflow: 'scroll',
+        paddingLeft: '10px',
+        paddingRight: '10px'
     },
 });

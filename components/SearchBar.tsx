@@ -31,16 +31,23 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked} : Props)
                     value={searchPhrase}
                     onChangeText={setSearchPhrase}
                     onFocus={() => {
-                        setClicked(true);
+                        setClicked(true)
+
                     }}
+                    underlineColorAndroid='transparent'
                 />
                 {/* cross Icon, depending on whether the search bar is clicked or not */}
-                {clicked && (
-                    <Entypo name="cross" size={20} color="black" style={{ padding: 1 }} onPress={() => {
-                        setSearchPhrase("")
 
-                    }}/>
-                )}
+                <View
+                    style={{'width': '20px'}}
+                >
+                    {clicked && (
+                        <Entypo name="cross" size={20} color="black" style={{ padding: 1 }} onPress={() => {
+                            setSearchPhrase("")
+
+                        }}/>
+                    )}
+                </View>
             </View>
         </View>
     );
@@ -50,7 +57,6 @@ export default SearchBar;
 // styles
 const styles = StyleSheet.create({
     container: {
-        marginBottom: 15,
         justifyContent: "flex-start",
         alignItems: "center",
         flexDirection: "row",
@@ -62,10 +68,11 @@ const styles = StyleSheet.create({
         flexDirection: "row",
         width: "100%",
         alignItems: "center",
-        justifyContent: "center"
+        justifyContent: "center",
     },
     input: {
-        padding: 10,
+        border: 'none',
+        padding: 20,
         fontSize: 20,
         marginLeft: 10,
         width: "100%",

@@ -19,13 +19,13 @@ const Item = ({ name, details }: any) => (
 const List: React.FC<Props> = ({value}) => {
 
     return (
-        <View>
+        <View style={styles.list}>
             <FlatList
                 data={getData(value)}
                 renderItem={({ item }) => {
                     return <Item name={item.name} details={item.group} />
                 }}
-                keyExtractor={(item) => item.name}
+                keyExtractor={(item) => item.name + item.group + item.value}
             />
         </View>
     )
@@ -34,8 +34,11 @@ const List: React.FC<Props> = ({value}) => {
 export default List
 
 const styles = StyleSheet.create({
+    list: {
+        flex: 1,
+    },
     item: {
-        margin: 30,
+        // margin: 30,
         borderBottomWidth: 2,
         borderBottomColor: "lightgrey"
     },
