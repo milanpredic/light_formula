@@ -44,13 +44,11 @@ export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
             <View style={styles.content}>
                 <ColorSpectrum value={average} />
 
-
-                {/*<View> list</View>*/}
                 <View style={styles.contentInner}>
-                    <ContentBox title="List 1" key="1">
+                    <ContentBox title="List 1">
                         { !!result.length && <List value={average} />}
                     </ContentBox>
-                    <ContentBox title="List 2" key="2">
+                    <ContentBox title="List 2">
                         { !!result.length && <List value={average} />}
                     </ContentBox>
                 </View>
