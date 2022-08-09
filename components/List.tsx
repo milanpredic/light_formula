@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {ScrollView, StyleSheet} from 'react-native';
 
 import React from "react";
 import {FlatList} from "react-native";
@@ -17,16 +17,28 @@ const Item = ({ name, details }: any) => (
 );
 
 const List: React.FC<Props> = ({value}) => {
+    const data = getData(value);
+
+    if (!data) {
+        return null;
+    }
 
     return (
         <View style={styles.list}>
-            <FlatList
-                data={getData(value)}
-                renderItem={({ item }) => {
-                    return <Item name={item.name} details={item.group} />
-                }}
-                keyExtractor={(item) => item.name + item.group + item.value}
-            />
+            <ScrollView>
+                {
+                    Object.keys(data).map((groupName, groupIndex) => (
+                        <View style={styles.item} key={groupIndex}>
+                            <Text>{groupName}</Text>
+                            {
+                                Object.values(data[groupName]).map((value, index) => (
+                                    <Text key={index}>{value}</Text>
+                                ))
+                            }
+                        </View>
+                    ))
+                }
+            </ScrollView>
         </View>
     )
 }

@@ -27,7 +27,7 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked} : Props)
                 {/* Input field */}
                 <TextInput
                     style={styles.input}
-                    placeholder="Search"
+                    placeholder="Unesi pojam.."
                     value={searchPhrase}
                     onChangeText={setSearchPhrase}
                     onFocus={() => {

@@ -34,7 +34,7 @@ export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
     return (
         <View style={styles.main}>
             <View style={styles.header}>
-                <Text style={styles.headerLabel}>Light Formula</Text>
+                <Text style={styles.headerLabel}>Svetlosna Formula</Text>
                 <Text
                     style={[styles.headerNumber, {color: average ? getColor(average) : 'white'} ]}
                 >
@@ -44,14 +44,15 @@ export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
             <View style={styles.content}>
                 <ColorSpectrum value={average} />
 
-                <View style={styles.contentInner}>
-                    <ContentBox title="List 1">
-                        { !!result.length && <List value={average} />}
-                    </ContentBox>
-                    <ContentBox title="List 2">
-                        { !!result.length && <List value={average} />}
-                    </ContentBox>
-                </View>
+                { !!result.length && <List value={average} />}
+                {/*<View style={styles.contentInner}>*/}
+                {/*    <ContentBox title="List 1">*/}
+                {/*        { !!result.length && <List value={average} />}*/}
+                {/*    </ContentBox>*/}
+                {/*    <ContentBox title="List 2">*/}
+                {/*        */}
+                {/*    </ContentBox>*/}
+                {/*</View>*/}
             </View>
 
             <SearchBar

@@ -23,14 +23,23 @@ export default function LightFormula(phrase: string): LightFormulaResult {
     })
 }
 
-export function getData(average: number): DBRow[] {
+interface DBDataSorted {[key: string]: string[]}
+export function getData(average: number): DBDataSorted | null {
     const color = getRangeColor(average)
 
     if (!color) {
-        return []
+        return null
     }
 
-    return db.filter((row: DBRow) => isInside(color, row.value))
+    const list: DBDataSorted = {}
+    return db.filter((row: DBRow) => isInside(color, row.value)).reduce((acc, row: DBRow) => {
+        if (!acc[row.group]) {
+            acc[row.group] = [];
+        }
+        acc[row.group].push(row.name)
+
+        return acc;
+    }, list)
 }
 
 export function getRangeColor(value: number): RangeColor | null  {
