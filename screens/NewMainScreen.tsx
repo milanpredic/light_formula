@@ -1,14 +1,13 @@
-import {SafeAreaView, StyleSheet} from 'react-native';
+import {Pressable, SafeAreaView, StyleSheet} from 'react-native';
 import {Text, View} from '../components/Themed';
 import SearchBar from "../components/SearchBar";
 import {useEffect, useState} from "react";
-import LightFormula, {getColor, LightFormulaResult} from "../utils/LightFormula";
-import ColorSpectrum from "../components/ColorSpectrum";
-import List from "../components/List";
+import LightFormula, {LightFormulaResult} from "../utils/LightFormula";
 import {useTheme} from "@react-navigation/native";
+import Chart from "../components/Chart";
 import {RootStackScreenProps} from "../navigation/types";
 
-export default function MainScreen({navigation}: RootStackScreenProps<'Root'>) {
+export default function NewMainScreen({navigation}: RootStackScreenProps<'Root'>) {
     const theme = useTheme();
     const [phrase, setPhrase] = useState('');
     const [clicked, setClicked] = useState(false);
@@ -32,16 +31,17 @@ export default function MainScreen({navigation}: RootStackScreenProps<'Root'>) {
         <SafeAreaView style={styles.main}>
             <View style={[styles.header, { backgroundColor: theme.colors.background }]}>
                 <Text style={[styles.headerLabel, { color: theme.colors.text }]}>Svetlosna Formula</Text>
-                <Text
-                    style={[styles.headerNumber, {color: average ? getColor(average) : 'white'} ]}
-                >
-                    {average}
-                </Text>
             </View>
             <View style={[styles.content, { backgroundColor: theme.colors.background }]}>
-                <ColorSpectrum value={average} />
-
-                { !!result.length && <List value={average} />}
+                <Chart value={average} />
+                {/*{ !!result.length && <List value={average} />}*/}
+                { !!result.length &&
+                    <Pressable onPress={() => navigation.navigate('Details', {
+                        value: average
+                    })}>
+                        <Text style={[styles.readMoreText, { color: theme.colors.text }]}>Vidi još..</Text>
+                    </Pressable>
+                }
             </View>
 
             <SearchBar
@@ -67,20 +67,16 @@ const styles = StyleSheet.create({
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'nowrap',
-        justifyContent: 'space-between',
+        justifyContent: 'center',
         padding: 20,
     },
     headerLabel: {
         fontSize: 20,
         fontWeight: 'bold',
     },
-    headerNumber: {
-        fontSize: 20,
-        fontWeight: 'bold',
-    },
     content: {
         flex: 1,
-        flexDirection: 'row',
+        flexDirection: 'column',
         flexWrap: 'nowrap'
     },
     contentInner: {
@@ -90,4 +86,7 @@ const styles = StyleSheet.create({
         paddingLeft: '10px',
         paddingRight: '10px'
     },
+    readMoreText: {
+        textAlign: 'center',
+    }
 });

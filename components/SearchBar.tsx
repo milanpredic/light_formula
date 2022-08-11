@@ -1,6 +1,6 @@
 import React from "react";
 import { StyleSheet, TextInput, View} from "react-native";
-import { Feather, Entypo } from "@expo/vector-icons";
+import { Entypo } from "@expo/vector-icons";
 import {useTheme} from "@react-navigation/native";
 
 interface Props {
@@ -11,22 +11,13 @@ interface Props {
 }
 
 const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked} : Props) => {
-    const theme = useTheme();
     return (
-        <View style={styles.container}>
             <View style={styles.searchBar}>
-                {/* search Icon */}
-                <Feather
-                    name="search"
-                    size={20}
-                    color="black"
-                    style={{ marginLeft: 1 }}
-                />
                 {/* Input field */}
                 <TextInput
                     style={styles.input}
                     placeholder="Unesi pojam.."
-                    placeholderTextColor={theme.colors.text}
+                    placeholderTextColor={'#aaaaaa'}
                     value={searchPhrase}
                     onChangeText={setSearchPhrase}
                     onFocus={() => {
@@ -37,15 +28,14 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked} : Props)
                 />
                 {/* cross Icon, depending on whether the search bar is clicked or not */}
 
-                <View style={{'width': 20}}>
-                    {clicked && (
-                        <Entypo name="cross" size={20} color="black" style={{ padding: 1 }} onPress={() => {
-                            setSearchPhrase("")
-                        }}/>
-                    )}
-                </View>
+                {/*<View style={{'width': 20}}>*/}
+                {/*    {clicked && (*/}
+                {/*        <Entypo name="cross" size={20} color="black" style={{ padding: 1 }} onPress={() => {*/}
+                {/*            setSearchPhrase("")*/}
+                {/*        }}/>*/}
+                {/*    )}*/}
+                {/*</View>*/}
             </View>
-        </View>
     );
 };
 export default SearchBar;
@@ -53,25 +43,27 @@ export default SearchBar;
 // styles
 const styles = StyleSheet.create({
     container: {
-        justifyContent: "flex-start",
+        justifyContent: "center",
         alignItems: "center",
         flexDirection: "row",
-        width: "100%",
-
+        marginBottom: 40
     },
     searchBar: {
-        backgroundColor: "#333333",
         flexDirection: "row",
-        width: "100%",
         alignItems: "center",
         justifyContent: "center",
+        marginHorizontal: 20,
+        marginVertical: '15%',
     },
     input: {
         padding: 20,
-        fontSize: 20,
+        fontSize: 16,
         marginLeft: 10,
         width: "100%",
         color: "#FFFFFF",
-        borderWidth: 0
+        borderStyle: 'solid',
+        borderColor: 'white',
+        borderWidth: 1,
+        borderRadius: 30
     },
 });

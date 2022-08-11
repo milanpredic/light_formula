@@ -10,8 +10,9 @@ import { ColorSchemeName } from 'react-native';
 
 import ModalScreen from '../screens/ModalScreen';
 import NotFoundScreen from '../screens/NotFoundScreen';
-import MainScreen from '../screens/MainScreen';
-import { RootStackParamList } from '../types';
+import { RootStackParamList } from './types';
+import NewMainScreen from "../screens/NewMainScreen";
+import DetailsScreen from "../screens/DetailsSecreen";
 
 const MyTheme: Theme = {
     ...DarkTheme,
@@ -40,7 +41,8 @@ const Stack = createNativeStackNavigator<RootStackParamList>();
 function RootNavigator() {
   return (
     <Stack.Navigator>
-      <Stack.Screen name="Root" component={MainScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Root" component={NewMainScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="Details" component={DetailsScreen} />
       <Stack.Screen name="NotFound" component={NotFoundScreen} options={{ title: 'Oops!' }} />
       <Stack.Group screenOptions={{ presentation: 'modal' }}>
         <Stack.Screen name="Modal" component={ModalScreen} />
