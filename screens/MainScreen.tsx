@@ -1,4 +1,4 @@
-import {StyleSheet} from 'react-native';
+import {SafeAreaView, StyleSheet} from 'react-native';
 import {Text, View} from '../components/Themed';
 import {RootTabScreenProps} from '../types';
 import SearchBar from "../components/SearchBar";
@@ -6,9 +6,10 @@ import {useEffect, useState} from "react";
 import LightFormula, {getColor, LightFormulaResult} from "../utils/LightFormula";
 import ColorSpectrum from "../components/ColorSpectrum";
 import List from "../components/List";
-import ContentBox from "../components/ContentBox";
+import {useTheme} from "@react-navigation/native";
 
 export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
+    const theme = useTheme();
     const [phrase, setPhrase] = useState('');
     const [clicked, setClicked] = useState(false);
     const [average, setAverage] = useState(0);
@@ -27,32 +28,20 @@ export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
         calculate(phrase);
     }, [phrase]);
 
-    useEffect(() => {
-
-    }, [result.total])
-
     return (
-        <View style={styles.main}>
-            <View style={styles.header}>
-                <Text style={styles.headerLabel}>Svetlosna Formula</Text>
+        <SafeAreaView style={styles.main}>
+            <View style={[styles.header, { backgroundColor: theme.colors.background }]}>
+                <Text style={[styles.headerLabel, { color: theme.colors.text }]}>Svetlosna Formula</Text>
                 <Text
                     style={[styles.headerNumber, {color: average ? getColor(average) : 'white'} ]}
                 >
                     {average}
                 </Text>
             </View>
-            <View style={styles.content}>
+            <View style={[styles.content, { backgroundColor: theme.colors.background }]}>
                 <ColorSpectrum value={average} />
 
                 { !!result.length && <List value={average} />}
-                {/*<View style={styles.contentInner}>*/}
-                {/*    <ContentBox title="List 1">*/}
-                {/*        { !!result.length && <List value={average} />}*/}
-                {/*    </ContentBox>*/}
-                {/*    <ContentBox title="List 2">*/}
-                {/*        */}
-                {/*    </ContentBox>*/}
-                {/*</View>*/}
             </View>
 
             <SearchBar
@@ -61,23 +50,25 @@ export default function MainScreen({navigation}: RootTabScreenProps<'TabOne'>) {
                 searchPhrase={phrase}
                 setSearchPhrase={(p) => setPhrase(p)}
             />
-        </View>
+        </SafeAreaView>
     );
 }
 
 const styles = StyleSheet.create({
     main: {
+        marginTop: 30,
         flexDirection: 'column',
         flexWrap: 'nowrap',
-        minHeight: '300px',
-        height: '100vh',
+        flex: 1
+        // minHeight: '300px',
+        // height: '100vh',
     },
     header: {
         display: 'flex',
         flexDirection: 'row',
         flexWrap: 'nowrap',
         justifyContent: 'space-between',
-        padding: '20px'
+        padding: 20,
     },
     headerLabel: {
         fontSize: 20,

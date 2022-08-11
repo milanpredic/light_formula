@@ -4,6 +4,7 @@ import React from "react";
 import {FlatList} from "react-native";
 import {View, Text} from "./Themed";
 import {getData} from "../utils/LightFormula";
+import {useTheme} from "@react-navigation/native";
 
 interface Props {
     value: number
@@ -17,6 +18,7 @@ const Item = ({ name, details }: any) => (
 );
 
 const List: React.FC<Props> = ({value}) => {
+    const theme = useTheme();
     const data = getData(value);
 
     if (!data) {
@@ -24,15 +26,15 @@ const List: React.FC<Props> = ({value}) => {
     }
 
     return (
-        <View style={styles.list}>
+        <View style={[styles.list, { backgroundColor: theme.colors.background }]}>
             <ScrollView>
                 {
                     Object.keys(data).map((groupName, groupIndex) => (
-                        <View style={styles.item} key={groupIndex}>
-                            <Text>{groupName}</Text>
+                        <View style={[styles.item, { backgroundColor: theme.colors.background }]} key={groupIndex}>
+                            <Text style={{ color: theme.colors.text, fontWeight: 'bold' }}>{groupName}</Text>
                             {
                                 Object.values(data[groupName]).map((value, index) => (
-                                    <Text key={index}>{value}</Text>
+                                    <Text style={{ color: theme.colors.text}} key={index}>{value}</Text>
                                 ))
                             }
                         </View>

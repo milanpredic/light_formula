@@ -3,7 +3,7 @@
  * https://reactnavigation.org/docs/getting-started
  *
  */
-import { NavigationContainer, DefaultTheme, DarkTheme } from '@react-navigation/native';
+import {NavigationContainer, DefaultTheme, DarkTheme, Theme} from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import * as React from 'react';
 import { ColorSchemeName } from 'react-native';
@@ -13,9 +13,19 @@ import NotFoundScreen from '../screens/NotFoundScreen';
 import MainScreen from '../screens/MainScreen';
 import { RootStackParamList } from '../types';
 
+const MyTheme: Theme = {
+    ...DarkTheme,
+    colors: {
+        ...DarkTheme.colors,
+        primary: 'white',
+        background: '#333333',
+        text: 'white'
+    }
+}
+
 export default function Navigation({ colorScheme }: { colorScheme: ColorSchemeName }) {
   return (
-    <NavigationContainer theme={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
+    <NavigationContainer theme={MyTheme}>
       <RootNavigator />
     </NavigationContainer>
   );

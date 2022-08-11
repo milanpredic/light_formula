@@ -1,6 +1,7 @@
 import React from "react";
 import { StyleSheet, TextInput, View} from "react-native";
 import { Feather, Entypo } from "@expo/vector-icons";
+import {useTheme} from "@react-navigation/native";
 
 interface Props {
     clicked: boolean,
@@ -10,13 +11,10 @@ interface Props {
 }
 
 const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked} : Props) => {
+    const theme = useTheme();
     return (
         <View style={styles.container}>
-            <View
-                style={
-                    styles.searchBar
-                }
-            >
+            <View style={styles.searchBar}>
                 {/* search Icon */}
                 <Feather
                     name="search"
@@ -28,6 +26,7 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked} : Props)
                 <TextInput
                     style={styles.input}
                     placeholder="Unesi pojam.."
+                    placeholderTextColor={theme.colors.text}
                     value={searchPhrase}
                     onChangeText={setSearchPhrase}
                     onFocus={() => {
@@ -38,13 +37,10 @@ const SearchBar = ({clicked, searchPhrase, setSearchPhrase, setClicked} : Props)
                 />
                 {/* cross Icon, depending on whether the search bar is clicked or not */}
 
-                <View
-                    style={{'width': '20px'}}
-                >
+                <View style={{'width': 20}}>
                     {clicked && (
                         <Entypo name="cross" size={20} color="black" style={{ padding: 1 }} onPress={() => {
                             setSearchPhrase("")
-
                         }}/>
                     )}
                 </View>
@@ -71,7 +67,6 @@ const styles = StyleSheet.create({
         justifyContent: "center",
     },
     input: {
-        border: 'none',
         padding: 20,
         fontSize: 20,
         marginLeft: 10,
